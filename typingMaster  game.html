@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TYping Master</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+    <style>
+        body {
+            
+            background: linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.5)), url("https://cdn.pixabay.com/photo/2019/10/23/14/08/keyboard-4571732_1280.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        #paragraph{
+            font-size: 2864px;
+        }
+    </style>
+</head>
+<body>
+    <div class="myDiv"> 
+        <div class="container">
+            <div class="row">
+
+                    <div class="col-md-12">
+                        <h3 class="text-center">Typing Master</h3>
+                        <h5 class="text-center">Character Per Minute</h5>
+                        <hr style=" background-color: red; height: 4px;" />
+                    </div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-12">
+                    <p class="text-center fw-bold">Double your typing speed. Learn keyboarding in a fun way. Test your cpm speed and accuracy. Play top-notch typing games. Find it all from TypingMaster!</p>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12" style="border: 3px dashed;">
+                        <p style="font-size: 28px;" class="fst-italic" id="paragraph"> </p>
+                </div>
+            </div>
+            <div class="row justify-content-center m-2">
+                <div class="col-md-2">
+                        <h5>Time: <span class="text text-danger" id="lblTime">0:00</span> </h2>
+                </div>
+                <div class="col-md-2">
+                    <h5>CPM: <span class="text text-danger" id="lblWPM">0 </span> </h2>
+                </div>
+                <div class="col-md-2">
+                    <h5>Totalcharacter: <span class="text text-danger" id="lbltotalch">0 </span> </h2>
+                </div>
+                <div class="col-md-2">
+                    <h5>Correctwords: <span class="text text-danger" id="lblcorrectwords">0 </span> </h2>
+                </div>
+                <div class="col-md-2">
+                    <h5>Mistakes: <span class="text text-danger" id="lblMistakes">0 </span> </h2>
+                </div>
+                <div class="col-md-2">
+                    <h5>Percentage: <span class="text text-danger" id="lblPercentage">0 </span> </h2>
+                </div>
+            </div>
+            <div class="row justify-content-center m-3">
+                <div class="col-md-8">
+                    <textarea id="userText" style="width: 100%;height: 200px;font-size: 24px;font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;" > 
+                        Click here to start the program
+                    </textarea>
+                </div>
+            </div>
+        </div>
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
+<script>
+        // var settext = {
+        //     maketext : function(){
+        //         this.selectedtext()
+        //     },
+        //     selectext = function(){}
+        // }
+    var coden = prompt("Enter your category \n 1) normal for normal text \n 2) codingtext for coding text")
+    let codingtext = [
+              "Array.prototype.quick_sort = function () { if (this.length < 2) { return this; } var pivot = this[Math.round(this.length / 2)]; return this.filter(x => x < pivot) .quick_sort() .concat(this.filter(x => x == pivot)) .concat(this.filter(x => x > pivot).quick_sort()); };",
+        "def binary_search(a, n, x) index_start = 0 index_end = n - 1 while index_start <= index_end do index_middle = (index_start + index_end) / 2 if a[index_middle] == x return index_middle elsif x < a[index_middle] index_end = index_middle - 1 else index_start = index_middle + 1 end end return end",
+        " Array.prototype.quick_sort = function () { if (this.length < 2) { return this; } var pivot = this[Math.round(this.length / 2)]; return this.filter(x => x < pivot) .quick_sort() .concat(this.filter(x => x == pivot)) .concat(this.filter(x => x > pivot).quick_sort()); };"
+    ]
+    let normaltext = [
+       "Take advantage of text’s 98% open rate with SMS marketing campaigns. Powerful messaging tools, built for a world of on-demand everything. Local SEO & Insights. Text Messaging. More Reviews. Attract More Customers",
+       "MS Text Marketing - By far the quickest, easiest and most effective way to reach your audience and engage them on personal level. Mass text messaging, also known as bulk SMS, is the preferred messaging communication channel by any business. With SMS and MMS messages marketers enjoy 98% read and open rates, 40% and higher response rates.",
+       "The ProTexting team exceeded our expectations not only in providing an outstanding technology solution, but in adding creativity to our ideas in ways that made our event stand out from the others at SXSW",
+       "Sodexo Education has embraced and continues to push the Mobile Marketing and Engagement project. This initiative has produced positive results and has provided tangible return on investment for Sodexo and its university dining units \""
+   ]
+   
+   let paragraphArray =  (coden=="normal")?normaltext:codingtext
+   let textArea = document.getElementById("userText");
+   let currentParagraph = document.getElementById("paragraph");
+   let labelCPM = document.getElementById("lblWPM");
+   let labelCorrectwords = document.getElementById("lblcorrectwords");
+   let labelMistakes = document.getElementById("lblMistakes");
+   let labelTime = document.getElementById("lblTime");
+   let labelPercentage = document.getElementById("lblPercentage");
+   let labelTotalCharacter = document.getElementById("lbltotalch");
+   let CPM = 0;
+   let percentage = 0;
+   let accuracy = 0;
+   let minutes = 1;
+   let seconds = 0;
+   let mistakes = 0;
+//    let totalalphabet = 0;
+   let correctCharacter = 0;
+   let thisInterval;
+   let isStart = "off";
+   let myIndexno = 0;
+   let cw = 0; 
+   let ct = 0;
+   let stableMinutes = minutes;
+
+
+    document.addEventListener("DOMContentLoaded",SetParagraph);
+     
+
+    
+
+    textArea.addEventListener("keydown",function(e){
+        if(e.keyCode === 8){
+            myIndexno--;
+
+
+            let spanArray = currentParagraph.getElementsByTagName("span");
+            let selectedSpan = spanArray[myIndexno];
+            if(selectedSpan.style.color === "red"){
+                mistakes--; 
+                selectedSpan.style.color = "#212529";
+                selectedSpan.style.fontWeight = "normal";
+                labelMistakes.innerText = mistakes;
+            }
+            else if(selectedSpan.style.color === "green"){
+                selectedSpan.style.color = "#212529";
+                selectedSpan.style.fontWeight = "normal";
+            }
+           
+
+        }
+    })
+    textArea.addEventListener("keypress",function(keyDetail) {
+
+        
+                    
+           
+            var currentKeyPressed = keyDetail.key; // jo key press hua h wo mil gaya
+           
+            //let index = textArea.value.length; // jo key press hua hai uska index no mil gaya
+            let spanArray = currentParagraph.getElementsByTagName("span"); // currentparaph ke sary span uthane k liem
+            let selectedSpan = spanArray[myIndexno]; //ab un sary span me se koi ek jo usi index no pe rkha h us pury span ko uthane k lien take color desaky
+            if(selectedSpan != undefined)
+            {
+                let selectedSpanText = spanArray[myIndexno].innerText; // ab un sary span me se koi ek jo usi index no pe rkha h uska text uthane k lien          
+                if(currentKeyPressed === selectedSpanText){ //condition takey 22no ko compare karsaky.
+                    selectedSpan.style.color = "green";
+                    selectedSpan.style.fontWeight = "bold";
+                    cw++;
+                    labelCorrectwords.innerText = cw;
+
+                  
+                }
+                else {
+                    selectedSpan.style.color = "red";
+                    selectedSpan.style.fontWeight = "bold";
+                    mistakes++;
+                    labelMistakes.innerText = mistakes;
+                }
+             }
+             else{
+                 SetParagraph();
+                 myIndexno = -1;
+             }
+             
+             myIndexno++;
+
+
+            ct++;
+            labelTotalCharacter.innerText = ct;
+
+    });
+    textArea.addEventListener("click",function(){
+        
+        if(isStart == "off")
+        {
+            startProgram();
+            //   confirm("Are you sure want to start the game?",startProgram,function(){})
+        }
+    
+    });
+    function startProgram() {
+        isStart = 'on';
+       textArea.value = "";
+       startTime();
+       
+    }
+    function startTime()
+    {
+       thisInterval = setInterval(StartCountDown,1000);       
+           
+    }
+
+    function StartCountDown() {
+
+        
+            if(minutes == 0 && seconds == 0)
+            {
+                clearInterval(thisInterval);
+                isStart = 'off';
+                seconds = 60;
+                textArea.setAttribute("disabled", true);
+                let totalCharacter = textArea.value.length;
+                percentage = Math.round(cw / totalCharacter * 100);
+                labelPercentage.innerText = percentage + "%";
+
+                let CharacterPerMinute = Math.round( totalCharacter / stableMinutes );
+                labelCPM.innerText = CharacterPerMinute + "%";
+                timeup();
+            }
+            else if(seconds == 0){
+                minutes --;
+                seconds = 60;
+            }
+            labelTime.innerText = minutes + ":" + seconds;
+            seconds--;
+
+        }  
+    function notify(text) {
+        alertify.set('notifier','position', 'top-right');
+        alertify.success(text);
+    }
+    function confirm(text,onSuccess,onFailure){
+        alertify.confirm(text,onSuccess,onFailure)
+    } 
+    function SetParagraph(){
+        currentParagraph.innerHTML = "";
+        let para = paragraphArray[Math.floor( Math.random() * 4 )].split('');
+        para.forEach(function(v){
+             let span = document.createElement("span"); //<span></span>
+             span.innerText = v; //<span> t </span>
+             currentParagraph.append(span);
+        })
+
+    }
+    
+
+    function timeup(){
+        alertify.success('Time Up');
+    }
+
+</script>
+</body>
+</html>
